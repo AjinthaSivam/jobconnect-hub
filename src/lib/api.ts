@@ -70,15 +70,36 @@ export interface Job {
   created_at?: string;
 }
 
+export interface JobCreateData {
+  title: string;
+  company: string;
+  location: string;
+  description: string;
+  requirements?: string;
+  salary?: string;
+  job_type?: string;
+}
+
 export interface Application {
   id: number;
-  name: string;
+  full_name: string;
   email: string;
-  resume_url: string;
+  phone?: string;
+  resume: string;
+  cover_letter?: string;
   job_id: number;
   job?: Job;
-  status: 'Pending' | 'Reviewed' | 'Shortlisted' | 'Rejected';
+  status: 'new' | 'reviewed' | 'shortlisted' | 'rejected';
   created_at?: string;
+}
+
+export interface ApplicationSubmitData {
+  job_id: number;
+  full_name: string;
+  email: string;
+  phone?: string;
+  resume: File;
+  cover_letter?: string;
 }
 
 export interface LoginCredentials {
@@ -95,12 +116,28 @@ export interface TokenResponse {
 export const jobsApi = {
   getAll: () => api.get<Job[]>('/api/jobs/'),
   getById: (id: string | number) => api.get<Job>(`/api/jobs/${id}/`),
+  create: (data: JobCreateData) => api.post<Job>('/api/jobs/', data),
+  update: (id: number, data: Partial<JobCreateData>) => api.patch<Job>(`/api/jobs/${id}/`, data),
+  fullUpdate: (id: number, data: JobCreateData) => api.put<Job>(`/api/jobs/${id}/`, data),
+  delete: (id: number) => api.delete(`/api/jobs/${id}/`),
 };
 
 export const applicationsApi = {
-  submit: (data: { name: string; email: string; resume_url: string; job_id: number }) =>
-    api.post('/api/applications/submit/', data),
+  submit: (data: ApplicationSubmitData) => {
+    const formData = new FormData();
+    formData.append('job_id', data.job_id.toString());
+    formData.append('full_name', data.full_name);
+    formData.append('email', data.email);
+    if (data.phone) formData.append('phone', data.phone);
+    formData.append('resume', data.resume);
+    if (data.cover_letter) formData.append('cover_letter', data.cover_letter);
+    
+    return api.post('/api/applications/submit/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
   getAll: () => api.get<Application[]>('/api/applications/'),
+  getById: (id: number) => api.get<Application>(`/api/applications/${id}/`),
   updateStatus: (id: number, status: string) =>
     api.patch(`/api/applications/${id}/update_status/`, { status }),
 };
