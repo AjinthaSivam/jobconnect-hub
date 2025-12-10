@@ -16,7 +16,7 @@ const ApplicationCard = ({ application }: ApplicationCardProps) => {
         <div className="flex justify-between items-start gap-4">
           <div className="space-y-1">
             <h3 className="font-semibold text-lg text-foreground">
-              {application.name}
+              {application.full_name}
             </h3>
             {application.job && (
               <p className="text-sm text-muted-foreground">
@@ -39,7 +39,7 @@ const ApplicationCard = ({ application }: ApplicationCardProps) => {
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <FileText className="h-4 w-4" />
           <a 
-            href={application.resume_url} 
+            href={application.resume} 
             target="_blank" 
             rel="noopener noreferrer"
             className="hover:text-primary transition-colors flex items-center gap-1"

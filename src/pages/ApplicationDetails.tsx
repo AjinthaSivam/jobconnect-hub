@@ -111,7 +111,7 @@ const ApplicationDetails = () => {
           <CardHeader>
             <div className="flex justify-between items-start">
               <div>
-                <CardTitle className="text-2xl">{application.name}</CardTitle>
+                <CardTitle className="text-2xl">{application.full_name}</CardTitle>
                 {application.job && (
                   <p className="text-muted-foreground mt-1 flex items-center gap-1">
                     <Building2 className="h-4 w-4" />
@@ -145,7 +145,7 @@ const ApplicationDetails = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Resume</p>
                   <a 
-                    href={application.resume_url}
+                    href={application.resume}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
@@ -186,10 +186,10 @@ const ApplicationDetails = () => {
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                    <SelectItem value="Reviewed">Reviewed</SelectItem>
-                    <SelectItem value="Shortlisted">Shortlisted</SelectItem>
-                    <SelectItem value="Rejected">Rejected</SelectItem>
+                    <SelectItem value="new">New</SelectItem>
+                    <SelectItem value="reviewed">Reviewed</SelectItem>
+                    <SelectItem value="shortlisted">Shortlisted</SelectItem>
+                    <SelectItem value="rejected">Rejected</SelectItem>
                   </SelectContent>
                 </Select>
                 
