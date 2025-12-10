@@ -9,13 +9,13 @@ interface StatusBadgeProps {
 const StatusBadge = ({ status, className }: StatusBadgeProps) => {
   const getStatusStyles = () => {
     switch (status) {
-      case 'Pending':
+      case 'new':
         return 'bg-warning/10 text-warning border-warning/20 hover:bg-warning/20';
-      case 'Reviewed':
+      case 'reviewed':
         return 'bg-info/10 text-info border-info/20 hover:bg-info/20';
-      case 'Shortlisted':
+      case 'shortlisted':
         return 'bg-success/10 text-success border-success/20 hover:bg-success/20';
-      case 'Rejected':
+      case 'rejected':
         return 'bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/20';
       default:
         return 'bg-muted text-muted-foreground';

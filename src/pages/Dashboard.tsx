@@ -45,7 +45,7 @@ const Dashboard = () => {
     if (searchTerm) {
       filtered = filtered.filter(
         (app) =>
-          app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          app.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
           app.job?.title?.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -78,10 +78,10 @@ const Dashboard = () => {
 
   const statusCounts = {
     all: applications.length,
-    Pending: applications.filter((a) => a.status === 'Pending').length,
-    Reviewed: applications.filter((a) => a.status === 'Reviewed').length,
-    Shortlisted: applications.filter((a) => a.status === 'Shortlisted').length,
-    Rejected: applications.filter((a) => a.status === 'Rejected').length,
+    new: applications.filter((a) => a.status === 'new').length,
+    reviewed: applications.filter((a) => a.status === 'reviewed').length,
+    shortlisted: applications.filter((a) => a.status === 'shortlisted').length,
+    rejected: applications.filter((a) => a.status === 'rejected').length,
   };
 
   return (
@@ -130,10 +130,10 @@ const Dashboard = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="Pending">Pending</SelectItem>
-              <SelectItem value="Reviewed">Reviewed</SelectItem>
-              <SelectItem value="Shortlisted">Shortlisted</SelectItem>
-              <SelectItem value="Rejected">Rejected</SelectItem>
+              <SelectItem value="new">New</SelectItem>
+              <SelectItem value="reviewed">Reviewed</SelectItem>
+              <SelectItem value="shortlisted">Shortlisted</SelectItem>
+              <SelectItem value="rejected">Rejected</SelectItem>
             </SelectContent>
           </Select>
         </div>
