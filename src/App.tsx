@@ -9,6 +9,7 @@ import Apply from "./pages/Apply";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ApplicationDetails from "./pages/ApplicationDetails";
+import JobManagement from "./pages/JobManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/applications/:id" element={<ApplicationDetails />} />
+          <Route path="/jobs/manage" element={<JobManagement />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
