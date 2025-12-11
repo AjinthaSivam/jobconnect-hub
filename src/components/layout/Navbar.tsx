@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Briefcase, LogOut, LayoutDashboard } from 'lucide-react';
+import { Briefcase, LogOut, LayoutDashboard, FolderCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { isAuthenticated, logout } from '@/lib/api';
 
@@ -40,7 +40,16 @@ const Navbar = () => {
                 }`}
               >
                 <LayoutDashboard className="h-4 w-4" />
-                Dashboard
+                Applications
+              </Link>
+              <Link 
+                to="/jobs/manage"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+                  location.pathname === '/jobs/manage' ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                <FolderCog className="h-4 w-4" />
+                Manage Jobs
               </Link>
               <Button 
                 variant="ghost" 
