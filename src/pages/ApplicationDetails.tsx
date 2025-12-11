@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Mail, FileText, Calendar, ExternalLink, Save, Building2 } from 'lucide-react';
+import { ArrowLeft, Mail, FileText, Calendar, ExternalLink, Save, Building2, Phone, MessageSquare } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,17 +31,11 @@ const ApplicationDetails = () => {
       if (!id) return;
       
       try {
-        const response = await applicationsApi.getAll();
-        const app = response.data.find((a) => a.id === parseInt(id, 10));
-        
-        if (app) {
-          setApplication(app);
-          setNewStatus(app.status);
-        } else {
-          setError('Application not found.');
-        }
+        const response = await applicationsApi.getById(parseInt(id, 10));
+        setApplication(response.data);
+        setNewStatus(response.data.status);
       } catch (err) {
-        setError('Failed to load application details.');
+        setError('Application not found.');
         console.error('Error fetching application:', err);
       } finally {
         setLoading(false);
@@ -139,6 +133,21 @@ const ApplicationDetails = () => {
                   </a>
                 </div>
               </div>
+
+              {application.phone && (
+                <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
+                  <Phone className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <a 
+                      href={`tel:${application.phone}`}
+                      className="font-medium text-foreground hover:text-primary transition-colors"
+                    >
+                      {application.phone}
+                    </a>
+                  </div>
+                </div>
+              )}
               
               <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
                 <FileText className="h-5 w-5 text-primary" />
@@ -173,6 +182,36 @@ const ApplicationDetails = () => {
                   </div>
                 </div>
               )}
+
+              {application.cover_letter && (
+                <div className="p-3 bg-secondary/50 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <MessageSquare className="h-5 w-5 text-primary" />
+                    <p className="text-sm text-muted-foreground">Cover Letter</p>
+                  </div>
+                  <p className="font-medium text-foreground whitespace-pre-wrap">
+                    {application.cover_letter}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Resume Preview */}
+            <div className="space-y-2">
+              <Label className="text-lg font-semibold">Resume Preview</Label>
+              <div className="border border-border rounded-lg overflow-hidden bg-card">
+                <iframe
+                  src={application.resume}
+                  className="w-full h-[500px]"
+                  title="Resume Preview"
+                />
+              </div>
+              <Button asChild variant="outline" className="w-full">
+                <a href={application.resume} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Open Resume in New Tab
+                </a>
+              </Button>
             </div>
             
             <Separator />

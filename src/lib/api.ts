@@ -140,6 +140,7 @@ export const applicationsApi = {
   getById: (id: number) => api.get<Application>(`/api/applications/${id}/`),
   updateStatus: (id: number, status: string) =>
     api.patch(`/api/applications/${id}/update_status/`, { status }),
+  delete: (id: number) => api.delete(`/api/applications/${id}/`),
 };
 
 export const authApi = {
