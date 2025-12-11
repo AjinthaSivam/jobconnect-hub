@@ -146,7 +146,13 @@ const Dashboard = () => {
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredApplications.map((application) => (
-              <ApplicationCard key={application.id} application={application} />
+              <ApplicationCard 
+                key={application.id} 
+                application={application} 
+                onDelete={(id) => {
+                  setApplications(prev => prev.filter(a => a.id !== id));
+                }}
+              />
             ))}
           </div>
         )}

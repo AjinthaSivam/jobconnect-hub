@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Briefcase, LogOut, LayoutDashboard, FolderCog } from 'lucide-react';
+import { Briefcase, LogOut, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { isAuthenticated, logout } from '@/lib/api';
 
@@ -22,17 +22,17 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-4">
-          <Link 
-            to="/" 
-            className={`text-sm font-medium transition-colors hover:text-primary ${
-              location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'
-            }`}
-          >
-            Jobs
-          </Link>
-
           {authenticated ? (
             <>
+              <Link 
+                to="/jobs/manage"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+                  location.pathname === '/jobs/manage' ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                <Briefcase className="h-4 w-4" />
+                Jobs
+              </Link>
               <Link 
                 to="/dashboard"
                 className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
@@ -41,15 +41,6 @@ const Navbar = () => {
               >
                 <LayoutDashboard className="h-4 w-4" />
                 Applications
-              </Link>
-              <Link 
-                to="/jobs/manage"
-                className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                  location.pathname === '/jobs/manage' ? 'text-primary' : 'text-muted-foreground'
-                }`}
-              >
-                <FolderCog className="h-4 w-4" />
-                Manage Jobs
               </Link>
               <Button 
                 variant="ghost" 

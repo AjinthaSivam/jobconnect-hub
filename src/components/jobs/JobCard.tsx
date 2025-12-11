@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase, Clock, DollarSign } from 'lucide-react';
+import { MapPin, Clock, DollarSign } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Job } from '@/lib/api';
+import { Job, isAuthenticated } from '@/lib/api';
 
 interface JobCardProps {
   job: Job;
 }
 
 const JobCard = ({ job }: JobCardProps) => {
+  const authenticated = isAuthenticated();
+
   return (
     <Card className="group card-shadow hover:card-shadow-hover transition-all duration-300 animate-fade-in border-border/50">
       <CardHeader className="pb-3">
@@ -57,9 +59,11 @@ const JobCard = ({ job }: JobCardProps) => {
         <Button asChild variant="default" className="flex-1">
           <Link to={`/jobs/${job.id}`}>View Details</Link>
         </Button>
-        <Button asChild variant="outline">
-          <Link to={`/apply/${job.id}`}>Apply Now</Link>
-        </Button>
+        {!authenticated && (
+          <Button asChild variant="outline">
+            <Link to={`/apply/${job.id}`}>Apply Now</Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
